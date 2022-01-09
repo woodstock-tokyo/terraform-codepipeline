@@ -1,6 +1,6 @@
 provider "github" {
   token = var.github_token
-  owner = var.repo_owner
+  owner = var.github_organization
 }
 
 resource "github_repository_webhook" "default" {
