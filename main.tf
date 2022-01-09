@@ -1,6 +1,6 @@
 module "codepipeline_label" {
   source     = "./label"
-  attributes = compact(concat(var.attributes,  tolist(["codepipeline"])))
+  attributes = compact(concat(var.attributes, tolist(["codepipeline"])))
   delimiter  = var.delimiter
   name       = var.name
   namespace  = var.namespace
