@@ -10,7 +10,6 @@ module "codepipeline_label" {
 
 resource "aws_s3_bucket" "default" {
   bucket        = module.codepipeline_label.id
-  acl           = "private"
   force_destroy = var.s3_bucket_force_destroy
   tags          = module.codepipeline_label.tags
 }
