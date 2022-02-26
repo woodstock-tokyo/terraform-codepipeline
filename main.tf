@@ -214,7 +214,7 @@ resource "aws_codepipeline" "source_build_deploy" {
         Owner                = var.repo_owner
         Repo                 = var.repo_name
         Branch               = var.branch
-        PollForSourceChanges = var.poll_source_changes
+        PollForSourceChanges = var.webhook_enabled ? false : true
       }
     }
   }
