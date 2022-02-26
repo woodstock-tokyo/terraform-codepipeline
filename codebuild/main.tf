@@ -22,15 +22,13 @@ resource "aws_s3_bucket" "cache_bucket" {
 }
 
 resource "aws_s3_bucket_lifecycle_configuration" "cache_bucket" {
-  bucket = aws_s3_bucket.cache_bucket.bucket
+  count  = var.cache_enabled ? 1 : 0
+  bucket = aws_s3_bucket.cache_bucket[0].id
 
   rule {
-    id      = "codebuildcache"
-    enabled = true
-
+    id     = "codebuildcache"
+    status = "Enabled"
     prefix = "/"
-    tags   = module.label.tags
-
     expiration {
       days = var.cache_expiration_days
     }
