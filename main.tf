@@ -10,7 +10,6 @@ module "codepipeline_label" {
 
 resource "aws_s3_bucket" "default" {
   bucket        = module.codepipeline_label.id
-  acl           = "private"
   force_destroy = var.s3_bucket_force_destroy
   tags          = module.codepipeline_label.tags
 }
@@ -214,7 +213,7 @@ resource "aws_codepipeline" "source_build_deploy" {
         Owner                = var.repo_owner
         Repo                 = var.repo_name
         Branch               = var.branch
-        PollForSourceChanges = var.poll_source_changes
+        PollForSourceChanges = var.webhook_enabled ? false : true
       }
     }
   }

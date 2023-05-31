@@ -17,17 +17,18 @@ module "label" {
 resource "aws_s3_bucket" "cache_bucket" {
   count         = var.cache_enabled ? 1 : 0
   bucket        = local.cache_bucket_name_normalised
-  acl           = "private"
   force_destroy = true
   tags          = module.label.tags
+}
 
-  lifecycle_rule {
-    id      = "codebuildcache"
-    enabled = true
+resource "aws_s3_bucket_lifecycle_configuration" "cache_bucket" {
+  count  = var.cache_enabled ? 1 : 0
+  bucket = aws_s3_bucket.cache_bucket[0].id
 
+  rule {
+    id     = "codebuildcache"
+    status = "Enabled"
     prefix = "/"
-    tags   = module.label.tags
-
     expiration {
       days = var.cache_expiration_days
     }
